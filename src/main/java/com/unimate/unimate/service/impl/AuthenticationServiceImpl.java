@@ -32,11 +32,11 @@ import java.util.*;
 @Transactional
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-    @Value("${FRONT_END_URL}")
-    private String frontEndUrl;
+//    @Value("${FRONT_END_URL}")
+    private String frontEndUrl = "http://localhost:5173";
 
-    @Value("${BACK_END_URL}")
-    private String backEndUrl;
+//    @Value("${BACK_END_URL}")
+    private String backEndUrl = "http://localhost:8080";
 
     //todo autowird in constructor
     private final EmailService emailService;
