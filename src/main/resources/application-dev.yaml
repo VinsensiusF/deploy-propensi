@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://viaduct.proxy.rlwy.net:54118/railway
+    username: posgres
+    password: FRQrBsLWWHVGRAKMwHLEvyCyjoyFIzer
+    name: unimate
+
+  sql:
+    init:
+      mode: always
