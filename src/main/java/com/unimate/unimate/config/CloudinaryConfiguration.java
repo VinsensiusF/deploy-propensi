@@ -7,15 +7,11 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class CloudinaryConfiguration {
+    private String cloudName = "unimate-dev";
 
-    @Value("${CLOUD_NAME_CLOUDINARY}")
-    private String cloudName;
+    private String apiKey = "395333923642783";
 
-    @Value("${API_KEY_CLOUDINARY}")
-    private String apiKey;
-
-    @Value("${API_SECRET_CLOUDINARY}")
-    private String apiSecret;
+    private String apiSecret = "qnfx0zGigdR14rb1q2AAYDXXJAI";
 
     @Bean
     public Cloudinary cloudinary() {
