@@ -58,12 +58,13 @@ public class PaymentRestController {
     @Autowired
     private KelasService kelasService;
     private static final String JWT_HEADER = "Authorization";
+    
+    
 
-    @Value("${MIDTRANS_SERVER_KEY}")
-    private String midtransServerKey;
+    private final String midtransServerKey="SB-Mid-server-q1RrOIuuao_goc45qjsbh4eQ";
 
-    @Value("${MIDTRANS_CLIENT_KEY}")
-    private String midtransClientKey;
+
+    private final String midtransClientKey="SB-Mid-client-4zoHiOpZCb-BTIQx";
 
     @PostMapping("checkout")
     @ValidateToken({RoleEnum.STUDENT})
