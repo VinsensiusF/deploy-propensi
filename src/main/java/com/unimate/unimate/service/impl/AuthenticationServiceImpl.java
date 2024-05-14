@@ -36,7 +36,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private String frontEndUrl = "http://localhost:5173";
 
 //    @Value("${BACK_END_URL}")
-    private String backEndUrl = "http://localhost:8080";
+    private String backEndUrl = "https://deploy-propensi-production.up.railway.app/";
 
     //todo autowird in constructor
     private final EmailService emailService;
