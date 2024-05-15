@@ -13,5 +13,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
             .allowedOrigins("http://localhost:5173") // Replace this with your frontend origin
             .allowedMethods("GET", "POST", "PUT", "DELETE")
             .allowedHeaders("*");
+
+        registry.addMapping("/api/**") // Adjust the mapping to match your API endpoints
+            .allowedOrigins("https://unimate-frontend.vercel.app") // Replace this with your frontend origin
+            .allowedMethods("GET", "POST", "PUT", "DELETE")
+            .allowedHeaders("*");
+        
     }
 }
