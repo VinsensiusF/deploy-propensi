@@ -64,35 +64,35 @@ public class CourseRestController {
     }
 
     @PostMapping("/create")
-    @ValidateToken(RoleEnum.ADMIN)
+    @ValidateToken({RoleEnum.ADMIN ,RoleEnum.TEACHER})
     public ResponseEntity<?> createCourse(@Valid @RequestBody CreateCourseDTO createCourseDTO) {
         Course course = courseService.createCourse(createCourseDTO);
         return ResponseEntity.ok(course);
     }
 
     @PostMapping("/content/create")
-    @ValidateToken(RoleEnum.ADMIN)
+    @ValidateToken({RoleEnum.ADMIN ,RoleEnum.TEACHER})
     public ResponseEntity<?> createCourseContent(@Valid @RequestBody CreateCourseContentDTO createCourseContentDTO) {
         CourseContent courseContent = courseService.createCourseContent(createCourseContentDTO);
         return ResponseEntity.ok(courseContent);
     }
 
     @PutMapping("/update")
-    @ValidateToken(RoleEnum.ADMIN)
+    @ValidateToken({RoleEnum.ADMIN ,RoleEnum.TEACHER})
     public ResponseEntity<?> updateCourse(@Valid @RequestBody UpdateCourseDTO updateCourseDTO) {
         Course course = courseService.updateCourse(updateCourseDTO);
         return ResponseEntity.ok(course);
     }
 
     @PutMapping("/content/update")
-    @ValidateToken(RoleEnum.ADMIN)
+    @ValidateToken({RoleEnum.ADMIN ,RoleEnum.TEACHER})
     public ResponseEntity<?> updateCourseContent(@Valid @RequestBody UpdateCourseContentDTO updateCourseContentDTO) {
         CourseContent courseContent = courseService.updateCourseContent(updateCourseContentDTO);
         return ResponseEntity.ok(courseContent);
     }
 
     @DeleteMapping("/{id}")
-    @ValidateToken(RoleEnum.ADMIN)
+    @ValidateToken({RoleEnum.ADMIN ,RoleEnum.TEACHER})
     public ResponseEntity<?> deleteCourse(@PathVariable("id") Long id) {
         Course course = courseService.getCourseById(id);
         if (course == null) {
@@ -103,7 +103,7 @@ public class CourseRestController {
     }
 
     @DeleteMapping("/content/{id}")
-    @ValidateToken(RoleEnum.ADMIN)
+    @ValidateToken({RoleEnum.ADMIN ,RoleEnum.TEACHER})
     public ResponseEntity<?> deleteCourseContent(@PathVariable("id") Long id) {
         CourseContent courseContent = courseService.getCourseContentById(id);
         if (courseContent == null) {
