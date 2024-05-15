@@ -19,9 +19,11 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/kelas")
@@ -50,6 +52,7 @@ public class KelasRestController {
             kelasBaru.setCategory(kelas.getCategory());
             kelasBaru.setName(kelas.getName());
             kelasBaru.setPrice(kelas.getPrice());
+            kelasBaru.setCover(kelas.getClassPicture());
             listKelas.add(kelasBaru);
         }
         return listKelas;
@@ -65,6 +68,7 @@ public class KelasRestController {
                 kelasBaru.setCategory(kelas.getCategory());
                 kelasBaru.setName(kelas.getName());
                 kelasBaru.setPrice(kelas.getPrice());
+                kelasBaru.setCover(kelas.getClassPicture());
                 listKelas.add(kelasBaru);
             }
            
@@ -83,6 +87,7 @@ public class KelasRestController {
                 kelasBaru.setCategory(kelas.getCategory());
                 kelasBaru.setName(kelas.getName());
                 kelasBaru.setPrice(kelas.getPrice());
+                kelasBaru.setCover(kelas.getClassPicture());
                 listKelas.add(kelasBaru);
             }
            
@@ -100,6 +105,7 @@ public class KelasRestController {
                 kelasBaru.setCategory(kelas.getCategory());
                 kelasBaru.setName(kelas.getName());
                 kelasBaru.setPrice(kelas.getPrice());
+                kelasBaru.setCover(kelas.getClassPicture());
                 listKelas.add(kelasBaru);
             }
            
@@ -124,8 +130,11 @@ public class KelasRestController {
 
     @PostMapping("/create")
     @ValidateToken(RoleEnum.ADMIN)
-    public ResponseEntity<Kelas> createKelas(@Valid @RequestBody CreateKelasDTO createKelasDTO) {
+    public ResponseEntity<Kelas> createKelas( @Valid @ModelAttribute CreateKelasDTO createKelasDTO, 
+    @RequestParam("file") MultipartFile file,  @RequestParam("file2") MultipartFile file2 ) {
         Kelas kelas = kelasService.createKelas(createKelasDTO);
+        ResponseEntity<Map> kelasImg = kelasService.uploadImageClass(file, kelas.getId());
+        ResponseEntity<Map> kelasImg2 = kelasService.uploadCoverClass(file2, kelas.getId());
         return ResponseEntity.ok(kelas);
     }
 
@@ -248,14 +257,13 @@ public class KelasRestController {
         return ResponseEntity.ok(guruList);
     }
 
-    @GetMapping("/classes-taught/{id}")
-    @ValidateToken({RoleEnum.ADMIN,RoleEnum.TEACHER})
-    public ResponseEntity<?> getAllKelasTaughtByAGuru(@PathVariable("id") Long guruId) {
-        List<Kelas> kelasList = kelasGuruService.findAllKelasTaughtByAGuru(guruId);
+    @GetMapping("/classes-taught")
+    @ValidateToken({RoleEnum.STUDENT, RoleEnum.ADMIN, RoleEnum.TEACHER, RoleEnum.CUSTOMER_SERVICE, RoleEnum.TOP_LEVEL})
+    public ResponseEntity<?> getAllKelasTaughtByAGuru(HttpServletRequest request) {
+        String requestToken = request.getHeader(JWT_HEADER).substring(7);
+        Account account = accountService.getAccountFromJwt(requestToken);
+        List<Kelas> kelasList = kelasGuruService.findAllKelasTaughtByAGuru(account.getId());
         return ResponseEntity.ok(kelasList);
     }
-
-
-
 
 }
